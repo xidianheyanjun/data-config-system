@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "数据配置系统服务端",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xidianheyanjun@163.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "express-session": "^1.15.1",
+    "morgan": "~1.7.0",
+    "mysql": "^2.13.0",
+    "promise": "^7.1.1",
+    "serve-favicon": "~2.3.0"
+  }
+}

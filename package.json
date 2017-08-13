@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "数据配置系统服务端",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xidianheyanjun/data-config-system.git"
+  },
+  "keywords": [
+    "数据",
+    "配置",
+    "服务端"
+  ],
+  "author": "xidianheyanjun@163.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xidianheyanjun/data-config-system/issues"
+  },
+  "homepage": "https://github.com/xidianheyanjun/data-config-system#readme"
+}
