@@ -9,6 +9,7 @@ let fileUtils = require("./FileUtils");
 let Resolver = require("./Resolver");
 let Log = require("./Log");
 let Dao = require("./Dao");
+let responseCode = require("../util/response-code");
 
 class Dispatcher {
     constructor(configData) {
@@ -56,14 +57,16 @@ class Dispatcher {
 
             //判断权限
             let path = ["/", moduleName, "/", controllerName, "/", methodName].join("");
-            if (path != "/user/access/register" && path != "/user/access/valid" && path != "/user/access/login" && path != "/user/simulate/dispatch") {
-                if (!req.session.user) {
-                    log.info("the user does not login");
-                    resolver.json({
-                        status: 403,
-                        msg: "请求决绝，登录Token失效"
-                    });
-                    return false;
+            if (self["config"]["env"] != "local") {
+                if (path != "/user/access/login") {
+                    if (!req.session.user) {
+                        log.info("the user does not login");
+                        resolver.json({
+                            code: responseCode["auth"]["code"],
+                            msg: responseCode["auth"]["msg"]
+                        });
+                        return false;
+                    }
                 }
             }
 
@@ -71,8 +74,8 @@ class Dispatcher {
                 // 路径不存在
                 log.info(["the path is not existed---/", moduleName, "/", controllerName].join(""));
                 resolver.json({
-                    code: 404,
-                    msg: "not found"
+                    code: responseCode["path"]["code"],
+                    msg: responseCode["path"]["msg"]
                 });
                 return false;
             }
@@ -82,8 +85,8 @@ class Dispatcher {
                 // 路径不存在
                 log.info(["the path is not existed---/", moduleName, "/", controllerName, "/", methodName].join(""));
                 resolver.json({
-                    code: 404,
-                    msg: "not found"
+                    code: responseCode["path"]["code"],
+                    msg: responseCode["path"]["msg"]
                 });
                 return false;
             }

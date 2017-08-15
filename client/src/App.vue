@@ -1,15 +1,52 @@
 <template>
   <div id="app">
+    <el-row class="header">
+      <el-col :span="6" class="logo"></el-col>
+      <el-col :span="14"></el-col>
+      <el-col :span="4" class="userinfo">
+        <el-dropdown trigger="hover" @command="handleCommand">
+          <span class="el-dropdown-link userinfo-inner">{{user.acc}}</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+    </el-row>
+
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import env from "@/env";
+  import {mapGetters, mapActions} from 'vuex';
   export default {
-    name: 'app',
     components: {},
+    computed: mapGetters([
+      "user"
+    ]),
     data(){
       return {};
+    },
+    methods: {
+      handleCommand(command){
+        this[command]();
+      },
+      logout(){
+        let self = this;
+        self.$sendRequest({
+          url: env.url.logout,
+          params: {},
+          success: function (data) {
+            if (data.code == 200) {
+              window.localStorage.removeItem("user");
+              self.$router.push({path: '/login/index'});
+            }
+          },
+          error: function (err) {
+          }
+        });
+      }
     }
   }
 </script>
@@ -68,5 +105,48 @@
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+
+  .header {
+    height: 80px;
+    background-color: #008bd2;
+  }
+
+  .logo {
+    background: url("./assets/image/vivo-logo-white.png") center center no-repeat;
+    background-size: contain;
+    height: 80px;
+    padding-left: 100px;
+    color: #ffffff;
+    font-size: 22px;
+  }
+
+  .top-menu {
+    height: 80px;
+    line-height: 80px;
+    display: inline-block;
+    padding: 0 10px;
+    margin: 0 10px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .top-menu.active {
+    background-color: #00ccee;
+  }
+
+  .top-menu:hover {
+    background-color: #00ccee;
+  }
+
+  .userinfo {
+    padding-right: 35px;
+    height: 80px;
+    line-height: 80px;
+  }
+
+  .userinfo-inner {
+    cursor: pointer;
+    color: #fff;
   }
 </style>

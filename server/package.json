@@ -4,7 +4,7 @@
   "description": "数据配置系统服务端",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node app.js"
   },
   "author": "xidianheyanjun@163.com",
   "license": "ISC",

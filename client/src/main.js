@@ -9,6 +9,10 @@ import VueResouse from 'vue-resource';
 import store from './vuex/store';
 import env from './env';
 
+import "element-ui/lib/theme-default/index.css";
+import elementUI from "element-ui";
+Vue.use(elementUI);
+
 Vue.use(VueResouse);
 Vue.http.options.credentials = true;
 Vue.http.options.emulateJSON = true;
@@ -19,10 +23,14 @@ Vue.http.options.emulateJSON = true;
 // option.success:成功回调
 // option.error:失败回调
 Vue.prototype.$sendRequest = (option) => {
+  let self = this;
   return Vue.http.post(option.url, option.params).then(function (data) {
     console.log(data);
-    let body = env.mode != "dev" ? data.body : JSON.parse(data.body);
-    option.success && option.success(body);
+    if (data.body.code == 1001) {
+      self.$router.push({path: '/login/index'});
+      return false;
+    }
+    option.success && option.success(data.body);
   }, function (err) {
     console.log(err);
     option.error && option.error(err);
@@ -40,5 +48,5 @@ new Vue({
   store: store,
   router,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })

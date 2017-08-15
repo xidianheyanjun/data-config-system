@@ -53,5 +53,5 @@ componentsPaths.forEach((path)=> {
   initData.push(`{path: "${filePath}/:id", name:"${filePath}/id", component: ${componentName}}`);
 });
 // 添加默认路径
-initData.push(`{path: "*", redirect: {name: "/home/index"}}`);
+initData.push(`{path: "*", redirect: {name: "/login/index"}}`);
 fs.writeFileSync(targetFile, importData.join("") + "export default [" + initData.join(",") + "]");
