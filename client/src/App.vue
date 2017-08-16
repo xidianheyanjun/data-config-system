@@ -2,7 +2,7 @@
   <div id="app">
     <el-row class="header">
       <el-col :span="6" class="logo"></el-col>
-      <el-col :span="14"></el-col>
+      <el-col :span="14">&nbsp;</el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover" @command="handleCommand">
           <span class="el-dropdown-link userinfo-inner">{{user.acc}}</span>
@@ -148,5 +148,21 @@
   .userinfo-inner {
     cursor: pointer;
     color: #fff;
+  }
+
+  .left-menu {
+    display: inline-block;
+    position: fixed;
+    width: 19%;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    background-color: #324157;
+  }
+
+  .body {
+    display: inline-block;
+    width: 79%;
+    margin: 2% 0 0 20%;
   }
 </style>

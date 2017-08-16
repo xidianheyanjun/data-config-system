@@ -5,7 +5,7 @@
 let Promise = require("promise");
 let mysql = require("mysql");
 
-let pool = null;
+let pools = {};
 
 class Dao {
     constructor(option) {
@@ -51,15 +51,25 @@ class Dao {
             let pageSize = parseInt(page["pageSize"]) || self["page"]["pageSize"];
             let pageNo = parseInt(page["pageNo"]) || self["page"]["pageNo"];
             self.log.info("[" + sql + "]|{" + params.join(",") + "}|{" + pageNo + "," + pageSize + "}");
-            let sqlTotal = `select count(1) from (${sql}) _t;`;
+            let sqlTotal = `select count(1) as total from (${sql}) _t;`;
             console.log(sqlTotal);
             thisPool.query(sqlTotal, params, function (error, results, fields) {
                 if (error) {
                     reject(error);
                     return false;
                 }
-                let totalSize = results[0];
+                console.log(results);
+                let totalSize = results[0].total;
                 let totalPage = self["computeTotalPage"](totalSize, pageSize);
+                if (totalPage == 0) {
+                    resolve({
+                        list: [],
+                        pageSize: pageSize,
+                        pageNo: pageNo,
+                        totalPage: totalPage
+                    });
+                    return false;
+                }
                 let queryPageNo = self["computeQueryPageNo"](totalPage, pageNo);
                 let start = pageSize * (queryPageNo - 1);
                 let querySql = `${sql} limit ${start}, ${pageSize};`;
@@ -71,7 +81,8 @@ class Dao {
                     resolve({
                         list: list,
                         pageSize: pageSize,
-                        pageNo: pageNo
+                        pageNo: pageNo,
+                        totalPage: totalPage
                     });
                 });
             });
@@ -90,15 +101,17 @@ class Dao {
      */
     computeTotalPage(totalSize, pageSize) {
         let remainder = totalSize % pageSize;
-        return remainder == 0 ? totalSize / pageSize : totalSize / pageSize + 1;
+        let page = parseInt(totalSize / pageSize);
+        return remainder == 0 ? page : page + 1;
     }
 
     getPool(option) {
-        if (!pool) {
+        let dbId = option["id"] + "";
+        if (!pools[dbId]) {
             let setting = Object.assign({connectionLimit: 100}, option);
-            pool = mysql.createPool(setting);
+            pools[dbId] = mysql.createPool(setting);
         }
-        return pool;
+        return pools[dbId];
     }
 }
 

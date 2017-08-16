@@ -15,6 +15,7 @@
     "pageSize": 20
   },
   "mysql": {
+    "id": "dcs",
     "host": "localhost",
     "port": "3306",
     "user": "root",

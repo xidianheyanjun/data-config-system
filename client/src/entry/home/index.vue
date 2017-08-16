@@ -1,37 +1,35 @@
 <template>
   <div>
-    <el-row class="body">
-      <el-col :span="6">
-        <left-menu></left-menu>
-      </el-col>
-      <el-col :span="16">
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-        kjhkJHSKjsahh<br>
-      </el-col>
-    </el-row>
+    <div class="left-menu">
+      <left-menu></left-menu>
+    </div>
+    <div class="body">
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+      kjhkJHSKjsahh<br>
+    </div>
   </div>
 </template>
 
@@ -111,6 +109,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .body {
-  }
 </style>

@@ -25,9 +25,9 @@ Vue.http.options.emulateJSON = true;
 Vue.prototype.$sendRequest = (option) => {
   let self = this;
   return Vue.http.post(option.url, option.params).then(function (data) {
-    console.log(data);
-    if (data.body.code == 1001) {
-      self.$router.push({path: '/login/index'});
+    console.log(data, self);
+    if (data.body.code == 1001 || data.body.code == 403) {
+      window.location.href = "#/login/index";
       return false;
     }
     option.success && option.success(data.body);

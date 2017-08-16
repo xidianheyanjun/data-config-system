@@ -21,6 +21,10 @@ let obj = {
     path: {
         code: 404,
         msg: "接口不存在"
+    },
+    paramError: {
+        code: 601,
+        msg: "参数错误"
     }
 };
 module.exports = obj;

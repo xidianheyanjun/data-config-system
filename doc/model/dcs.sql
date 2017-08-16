@@ -42,6 +42,7 @@ create table t_db_column
 (
    id                   integer not null auto_increment,
    dt_id                integer,
+   code                 varchar(128),
    name                 varchar(128),
    data_type            varchar(16),
    default_value        varchar(128),

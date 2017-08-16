@@ -57,16 +57,14 @@ class Dispatcher {
 
             //判断权限
             let path = ["/", moduleName, "/", controllerName, "/", methodName].join("");
-            if (self["config"]["env"] != "local") {
-                if (path != "/user/access/login") {
-                    if (!req.session.user) {
-                        log.info("the user does not login");
-                        resolver.json({
-                            code: responseCode["auth"]["code"],
-                            msg: responseCode["auth"]["msg"]
-                        });
-                        return false;
-                    }
+            if (path != "/user/access/login") {
+                if (!req.session.user) {
+                    log.info("the user does not login");
+                    resolver.json({
+                        code: responseCode["auth"]["code"],
+                        msg: responseCode["auth"]["msg"]
+                    });
+                    return false;
                 }
             }
 
