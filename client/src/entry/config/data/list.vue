@@ -17,7 +17,7 @@
         <el-button @click="update">修改</el-button>
         <el-button @click="remove">删除</el-button>
       </el-row>
-      <el-table ref="table" :data="tableData" border tooltip-effect="dark" style="width: 100%; margin: 2% 0;"
+      <el-table ref="table" :data="tableData" border stripe tooltip-effect="dark" style="width: 100%; margin: 2% 0;"
                 @selection-change="handleSelectionChange">
         <el-table-column type="selection"></el-table-column>
         <el-table-column v-for="column in columns" :key="column.id" :prop="column.code"
@@ -28,7 +28,7 @@
         :current-page="page.current"
         :page-size="page.size"
         layout="total, prev, pager, next, jumper"
-        :total="page.total">
+        :page-count="page.total">
       </el-pagination>
     </div>
   </div>
@@ -50,7 +50,7 @@
         tableData: [],
         page: {
           current: 0,
-          size: 20,
+          size: 10,
           total: 0
         },
         multipleSelection: []
@@ -116,19 +116,56 @@
         });
       },
       create(){
+        let self = this;
+        self.$router.push({
+          path: '/config/data/edit',
+          query: {
+            type: "create",
+            dtId: self.dtId
+          }
+        });
       },
       view(){
+        let self = this;
+        if (self.multipleSelection.length != 1) {
+          self.$message("请选择一条记录");
+          return false;
+        }
+
+        self.$router.push({
+          path: '/config/data/edit',
+          query: {
+            type: "view",
+            dtId: self.dtId,
+            dataId: self.multipleSelection[0].id
+          }
+        });
       },
       update(){
+        let self = this;
+        if (self.multipleSelection.length != 1) {
+          self.$message("请选择一条记录");
+          return false;
+        }
+
+        self.$router.push({
+          path: '/config/data/edit',
+          query: {
+            type: "update",
+            dtId: self.dtId,
+            dataId: self.multipleSelection[0].id
+          }
+        });
       },
       remove(){
+        // 根据id删除数据 todo
       },
       handleSelectionChange(val) {
         console.log(val);
         this.multipleSelection = val;
       },
-      handleCurrentChange(val){
-        console.log(val);
+      handleCurrentChange(pageCurrent){
+        this.query(pageCurrent);
       }
     }
   }
