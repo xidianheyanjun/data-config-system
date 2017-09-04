@@ -30,7 +30,6 @@
           url: env.url.queryMenu,
           params: {},
           success: function (data) {
-            console.log(data);
             self.leftMenu = data.data;
           },
           error: function (err) {

@@ -22,7 +22,7 @@ sqls["listColumn"] = `
 sqls["listMeta"] = `
     select ds.id as id, ds.ip as ip, ds.port as port, ds.acc as acc, ds.psw as psw, ds.db_name as dbName,
     dt.table_name as tableName,
-    dc.code as code, dc.data_type as dataType
+    dc.id as dcId, dc.code as code, dc.name as name, dc.data_type as dataType
     from t_data_source ds, t_db_table dt, t_db_column dc
     where dt.id = ?
     and ds.id = dt.ds_id

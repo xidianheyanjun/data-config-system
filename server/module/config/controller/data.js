@@ -164,6 +164,119 @@ class access {
             });
         });
     }
+
+    listConfigColumnAndData() {
+        let self = this;
+        let session = this.req.session;
+        let body = self["req"]["body"];
+        let dtId = parseInt(body["dtId"]);
+        let dataId = parseInt(body["dataId"]) || 0;
+        if (!dtId) {
+            self["resolver"].json({
+                code: responseCode["paramError"]["code"],
+                msg: responseCode["paramError"]["msg"]
+            });
+            return false;
+        }
+
+        let promise = new Promise(function (resolve, reject) {
+            self.dao.prepareQuery({
+                sql: sqlObj["listMeta"],
+                params: [dtId, session["user"]["id"]]
+            }).then(function (results) {
+                console.log("listConfigColumnAndData|listMeta", results);
+                if (results.length == 0) {
+                    self["resolver"].json({
+                        code: responseCode["success"]["code"],
+                        msg: responseCode["success"]["msg"]
+                    });
+                    return false;
+                }
+                resolve(results);
+            }, function (err) {
+                console.log(err);
+                self["resolver"].json({
+                    code: responseCode["failure"]["code"],
+                    msg: responseCode["failure"]["msg"]
+                });
+            });
+        });
+        promise.then(function (data) {
+            let dbConfig = {
+                "id": data[0].id,
+                "host": data[0].ip,
+                "port": data[0].port,
+                "user": data[0].acc,
+                "password": data[0].psw,
+                "database": data[0].dbName
+            };
+            let tableName = data[0].tableName;
+            let queryColumn = [];
+            let whereClouse = [];
+            let whereParam = [];
+            for (let count = 0; count < data.length; ++count) {
+                queryColumn.push(data[count].code);
+                if (data[count].dataType == "auto" || data[count].dataType == "uuid") {
+                    whereClouse.push(data[count].code + " = ?");
+                    whereParam.push(dataId);
+                }
+            }
+            let sql = "select " + queryColumn.join(",") + " from " + tableName;
+            sql += whereClouse.length > 0 ? " where " + whereClouse.join(" and ") : "";
+            self.dao.prepareQuery({
+                cfg: dbConfig,
+                sql: sql,
+                params: whereParam
+            }).then(function (info) {
+                console.log(info);
+                let retColumns = [];
+                for (let m = 0; m < data.length; ++m) {
+                    retColumns.push({
+                        id: data[m]["dcId"],
+                        code: data[m]["code"],
+                        name: data[m]["name"],
+                        dataType: data[m]["dataType"]
+                    });
+                }
+                self["resolver"].json({
+                    code: responseCode["success"]["code"],
+                    msg: responseCode["success"]["msg"],
+                    data: {
+                        columns: retColumns,
+                        data: info[0] || {}
+                    }
+                });
+            }, function (error) {
+                console.log(error);
+                self["resolver"].json({
+                    code: responseCode["failure"]["code"],
+                    msg: responseCode["failure"]["msg"]
+                });
+            });
+        }, function (err) {
+            console.log(err);
+            self["resolver"].json({
+                code: responseCode["failure"]["code"],
+                msg: responseCode["failure"]["msg"]
+            });
+        });
+    }
+
+    save() {
+        let self = this;
+        let session = this.req.session;
+        let body = self["req"]["body"];
+        let dtId = parseInt(body["dtId"]);
+        let dataId = parseInt(body["dataId"]) || 0;
+        let sendData = body["sendData"] || {};
+        if (!dtId) {
+            self["resolver"].json({
+                code: responseCode["paramError"]["code"],
+                msg: responseCode["paramError"]["msg"]
+            });
+            return false;
+        }
+    }
 }
 
 module.exports = access;

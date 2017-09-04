@@ -18,7 +18,7 @@
         <el-button @click="remove">删除</el-button>
       </el-row>
       <el-table ref="table" :data="tableData" border stripe tooltip-effect="dark" style="width: 100%; margin: 2% 0;"
-                @selection-change="handleSelectionChange">
+                @selection-change="handleSelectionChange" @row-click="rowCLickHandle">
         <el-table-column type="selection"></el-table-column>
         <el-table-column v-for="column in columns" :key="column.id" :prop="column.code"
                          :label="column.name"></el-table-column>
@@ -159,6 +159,8 @@
       },
       remove(){
         // 根据id删除数据 todo
+      },
+      rowCLickHandle(row, event, column){
       },
       handleSelectionChange(val) {
         console.log(val);
