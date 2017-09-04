@@ -158,7 +158,23 @@
         });
       },
       remove(){
-        // 根据id删除数据 todo
+        // 根据id删除数据
+        let self = this;
+        self.$sendRequest({
+          url: env.url.deleteData,
+          params: {
+            dtId: self.dtId,
+            ids: self.multipleSelection
+          },
+          success: function (data) {
+            console.log(data);
+            self.tableData = data.data.list;
+            self.page.current = pageCurrent;
+            self.page.total = data.data.totalPage;
+          },
+          error: function (err) {
+          }
+        });
       },
       rowCLickHandle(row, event, column){
       },

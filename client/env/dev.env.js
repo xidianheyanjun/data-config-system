@@ -10,6 +10,7 @@ export default {
     listConfigColumn: "http://localhost:2016/config/data/listColumn",
     listConfigData: "http://localhost:2016/config/data/listData",
     listConfigColumnAndData: "http://localhost:2016/config/data/listConfigColumnAndData",
-    saveData: "http://localhost:2016/config/data/save"
+    saveData: "http://localhost:2016/config/data/save",
+    deleteData: "http://localhost:2016/config/data/deleteData"
   }
 };

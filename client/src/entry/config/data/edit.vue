@@ -72,8 +72,10 @@
             sendData: self.dataObj
           },
           success: function (data) {
+            alert("保存成功");
           },
           error: function (err) {
+            console.log("err", err);
           }
         });
       },

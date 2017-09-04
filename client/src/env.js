@@ -9,6 +9,8 @@ export default {
     queryMenu: "http://localhost:2016/config/data/listMenu",
     listConfigColumn: "http://localhost:2016/config/data/listColumn",
     listConfigData: "http://localhost:2016/config/data/listData",
-    listConfigColumnAndData: "http://localhost:2016/config/data/listConfigColumnAndData"
+    listConfigColumnAndData: "http://localhost:2016/config/data/listConfigColumnAndData",
+    saveData: "http://localhost:2016/config/data/save",
+    deleteData: "http://localhost:2016/config/data/deleteData"
   }
 };
