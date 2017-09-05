@@ -11,7 +11,7 @@ sqls["listMenu"] = `
 `;
 
 sqls["listColumn"] = `
-    select id, code, name
+    select id, code, name, data_type as dataType
     from t_db_column
     where dt_id = ?
     and create_user = ?

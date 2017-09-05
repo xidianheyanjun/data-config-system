@@ -32,6 +32,7 @@
         dtId: 0,
         type: "",
         dataId: 0,
+        retColumns: [],
         columns: [],
         dataObj: {}
       };
@@ -54,7 +55,17 @@
             dataId: self.dataId
           },
           success: function (data) {
-            self.columns = data.data.columns;
+            self.retColumns = data.data.columns;
+            for (let m = 0; m < self.retColumns.length; ++m) {
+              if (self.type == "create" || self.type == "update") {
+                let dataType = self.retColumns[m]["dataType"];
+                if (dataType == "auto" || dataType == "uuid" || dataType == "create_user" || dataType == "create_time" || dataType == "update_user" || dataType == "update_time") {
+                  continue;
+                }
+              }
+
+              self.columns.push(self.retColumns[m]);
+            }
             self.dataObj = data.data.data;
           },
           error: function (err) {
@@ -68,11 +79,12 @@
           url: env.url.saveData,
           params: {
             dtId: self.dtId,
+            type: self.type,
             dataId: self.dataId,
-            sendData: self.dataObj
+            sendData: JSON.stringify(self.dataObj)
           },
           success: function (data) {
-            alert("保存成功");
+            self.$router.go(-1);
           },
           error: function (err) {
             console.log("err", err);

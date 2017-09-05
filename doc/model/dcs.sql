@@ -14,6 +14,8 @@ drop table if exists t_menu;
 
 drop table if exists t_user;
 
+drop table if exists t_test;
+
 /*==============================================================*/
 /* Table: t_data_source                                         */
 /*==============================================================*/
@@ -106,3 +108,16 @@ create table t_user
 
 alter table t_user comment '用户表';
 
+/*==============================================================*/
+/* Table: t_test                                                */
+/*==============================================================*/
+create table t_test
+(
+   id                   integer not null auto_increment,
+   name                 varchar(128),
+   age                  varchar(128),
+   status               tinyint(4),
+   primary key (id)
+);
+
+alter table t_test comment '测试表';

@@ -160,17 +160,19 @@
       remove(){
         // 根据id删除数据
         let self = this;
+        if (self.multipleSelection.length == 0) {
+          self.$message("请选择一条记录");
+          return false;
+        }
         self.$sendRequest({
           url: env.url.deleteData,
           params: {
             dtId: self.dtId,
-            ids: self.multipleSelection
+            ids: JSON.stringify(self.multipleSelection)
           },
           success: function (data) {
-            console.log(data);
-            self.tableData = data.data.list;
-            self.page.current = pageCurrent;
-            self.page.total = data.data.totalPage;
+            self.$message("删除成功");
+            self.query(self.page.current);
           },
           error: function (err) {
           }
